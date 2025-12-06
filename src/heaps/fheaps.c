@@ -6,13 +6,33 @@
 /*   By: tsignori <tsignori@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 12:54:15 by tsignori          #+#    #+#             */
-/*   Updated: 2025/12/06 15:50:02 by tsignori         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:38:27 by tsignori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sys/fsystem.h"
 #include "../../includes/heaps/fheaps.h"
 #include "../../includes/heaps/utils/heaps_utils_prototypes.h"
+
+static void	set_vtable(fheap *heap)
+{
+	if (heap->id == RAW_HEAP)
+		heap->vptr = (heap_vtbl *)get_raw_vtable();
+	if (heap->id == PTR_HEAP)
+		heap->vptr = (heap_vtbl *)get_ptr_vtable();
+	if (heap->id == T04_HEAP)
+		heap->vptr = (heap_vtbl *)get_t04_vtable();
+	if (heap->id == T08_HEAP)
+		heap->vptr = (heap_vtbl *)get_t08_vtable();
+	if (heap->id == T16_HEAP)
+		heap->vptr = (heap_vtbl *)get_t16_vtable();
+	if (heap->id == T24_HEAP)
+		heap->vptr = (heap_vtbl *)get_t24_vtable();
+	if (heap->id == T32_HEAP)
+		heap->vptr = (heap_vtbl *)get_t32_vtable();
+	if (heap->id == T64_HEAP)
+		heap->vptr = (heap_vtbl *)get_t64_vtable();
+}
 
 fl_central	*get_central(void)
 {
@@ -47,26 +67,7 @@ fheap	*get_heap(int id)
 			heap->base = central->os.reserve(1024 * 1024 * 32);
 		if (id == T64_HEAP)
 			heap->base = central->os.reserve(1024 * 1024 * 64);
+		set_vtable(heap);
 	}
 	return (heap);
-}
-
-void	set_vtable(fheap *heap)
-{
-	if (heap->id == RAW_HEAP)
-		heap->vptr = get_raw_vtable();
-	if (heap->id == PTR_HEAP)
-		heap->vptr = get_ptr_vtable();
-	if (heap->id == T04_HEAP)
-		heap->vptr = get_t04_vtable();
-	if (heap->id == T08_HEAP)
-		heap->vptr = get_t08_vtable();
-	if (heap->id == T16_HEAP)
-		heap->vptr = get_t16_vtable();
-	if (heap->id == T24_HEAP)
-		heap->vptr = get_t24_vtable();
-	if (heap->id == T32_HEAP)
-		heap->vptr = get_t32_vtable();
-	if (heap->id == T64_HEAP)
-		heap->vptr = get_t64_vtable();
 }
