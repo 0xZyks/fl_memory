@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fsystem.h                                          :+:      :+:    :+:   */
+/*   heaps_utils_prototypes.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsignori <tsignori@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/06 05:59:55 by tsignori          #+#    #+#             */
-/*   Updated: 2025/12/06 15:49:41 by tsignori         ###   ########.fr       */
+/*   Created: 2025/12/06 15:33:54 by tsignori          #+#    #+#             */
+/*   Updated: 2025/12/06 15:43:37 by tsignori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FSYSTEM_H
-# define FSYSTEM_H
+#ifndef HEAPS_UTILS_H
+# define HEAPS_UTILS_H
 
-# include "../types/fl_types.h"
-# include <unistd.h>
-# include <sys/mman.h>
+# include "../fheaps.h"
 
-typedef struct s_fl_os_mem {
-	void	*(*reserve)(f_size size);
-	void	(*release)(void *ptr, f_size size);
-	f_size	page_size;
-} fl_os_mem;
+heap_vtbl	*get_raw_vtable(void);
+heap_vtbl	*get_ptr_vtable(void);
+heap_vtbl	*get_t04_vtable(void);
+heap_vtbl	*get_t08_vtable(void);
+heap_vtbl	*get_t16_vtable(void);
+heap_vtbl	*get_t24_vtable(void);
+heap_vtbl	*get_t32_vtable(void);
+heap_vtbl	*get_t64_vtable(void);
 
-fl_os_mem linux_os_mem(void);
-
-#endif // !SYSTEM_H
+#endif // !HEAPS_UTILS_H
