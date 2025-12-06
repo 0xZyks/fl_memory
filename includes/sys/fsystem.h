@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fl_memory.c                                        :+:      :+:    :+:   */
+/*   fsystem.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsignori <tsignori@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 18:15:30 by tsignori          #+#    #+#             */
-/*   Updated: 2025/12/06 05:52:05 by tsignori         ###   ########.fr       */
+/*   Created: 2025/12/06 05:59:55 by tsignori          #+#    #+#             */
+/*   Updated: 2025/12/06 11:46:11 by tsignori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fl_memory.h"
-#include "../includes/types/fl_types.h"
-#include <stdio.h>
+#ifndef FSYSTEM_H
+# define FSYSTEM_H
 
-void	*fl_malloc(f_size len)
-{
-	void	*ptr;
+# include "../types/fl_types.h"
+# include <unistd.h>
+# include <sys/mman.h>
 
-	return (ptr);
-}
+typedef struct s_fl_os_mem {
+	void	*(*reserve)(f_size size);
+	void	(*release)(void *ptr, f_size size);
+	f_size	page_size;
+} fl_os_mem;
 
-int	main(int ac, char **av)
-{
-	if (ac <= 1)
-		return (printf("Bad use, try passing parameters !"));
-	char	*str = *(++av);
-	printf("Str: %s\n", str);
-
-	return (0);
-}
+#endif // !SYSTEM_H
