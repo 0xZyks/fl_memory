@@ -6,32 +6,46 @@
 /*   By: tsignori <tsignori@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 12:54:15 by tsignori          #+#    #+#             */
-/*   Updated: 2025/12/06 16:38:27 by tsignori         ###   ########.fr       */
+/*   Updated: 2025/12/09 19:51:36 by tsignori         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sys/fsystem.h"
 #include "../../includes/heaps/fheaps.h"
-#include "../../includes/heaps/utils/heaps_utils_prototypes.h"
+#include "../../includes/heaps/utils/heaps_utils.h"
 
 static void	set_vtable(fheap *heap)
 {
-	if (heap->id == RAW_HEAP)
-		heap->vptr = (heap_vtbl *)get_raw_vtable();
-	if (heap->id == PTR_HEAP)
-		heap->vptr = (heap_vtbl *)get_ptr_vtable();
-	if (heap->id == T04_HEAP)
-		heap->vptr = (heap_vtbl *)get_t04_vtable();
-	if (heap->id == T08_HEAP)
-		heap->vptr = (heap_vtbl *)get_t08_vtable();
-	if (heap->id == T16_HEAP)
-		heap->vptr = (heap_vtbl *)get_t16_vtable();
-	if (heap->id == T24_HEAP)
-		heap->vptr = (heap_vtbl *)get_t24_vtable();
-	if (heap->id == T32_HEAP)
-		heap->vptr = (heap_vtbl *)get_t32_vtable();
-	if (heap->id == T64_HEAP)
-		heap->vptr = (heap_vtbl *)get_t64_vtable();
+	switch (heap->id)
+	{
+		case RAW_HEAP:
+			heap->vptr =  get_raw_vtable();
+			break;
+		case PTR_HEAP:
+			heap->vptr =  get_ptr_vtable();
+			break;
+		case T04_HEAP:
+			heap->vptr =  get_t04_vtable();
+			break;
+		case T08_HEAP:
+			heap->vptr =  get_t08_vtable();
+			break;
+		case T16_HEAP:
+			heap->vptr =  get_t16_vtable();
+			break;
+		case T32_HEAP:
+			heap->vptr =  get_t32_vtable();
+			break;
+		case T64_HEAP:
+			heap->vptr =  get_t64_vtable();
+			break;
+		case T128_HEAP:
+			heap->vptr =  get_t128_vtable();
+			break;
+		case T256_HEAP:
+			heap->vptr =  get_t256_vtable();
+			break;
+	}
 }
 
 fl_central	*get_central(void)
@@ -51,23 +65,10 @@ fheap	*get_heap(int id)
 	{
 		central->init[id] = 1;
 		heap->id = id;
-		if (id == RAW_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 64);
-		if (id == PTR_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 4);
-		if (id == T04_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 4);
-		if (id == T08_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 8);
-		if (id == T16_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 16);
-		if (id == T24_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 24);
-		if (id == T32_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 32);
-		if (id == T64_HEAP)
-			heap->base = central->os.reserve(1024 * 1024 * 64);
 		set_vtable(heap);
+		heap->is_init = 0;
+		heap->vptr->init(heap);
 	}
 	return (heap);
 }
+
